@@ -5,7 +5,7 @@ This was adapted from a GeeksforGeeks article "Program for Sudoku Generator" by 
 https://www.geeksforgeeks.org/program-sudoku-generator/
 
 """
-#comment alsdkjf;laksjdf;lkj
+
 class SudokuGenerator:
     '''
 	create a sudoku board - initialize class variables and set up the 2D board
