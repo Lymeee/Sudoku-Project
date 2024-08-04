@@ -128,7 +128,102 @@ def start_game(screen, difficulty):
         pygame.display.flip()
 
 def main():
-    pass
+    # initializing pygame module, making game window
+    pygame.init()
+    screen = pygame.display.set_mode((900, 1000))
+    screen.fill((255, 255, 255))
+    pygame.display.set_caption('Sudoku')
+
+    # Sudoku title: initialized, rendered, updated to screen
+    title_font = pygame.font.Font(None, 100)
+    title_surface = title_font.render('Sudoku', True, (0, 0, 0))
+    screen.blit(title_surface, (350, 300))
+
+    # Select difficulty message: initialized, rendered, updated to screen
+    difficulty_seletion = pygame.font.Font(None, 65)
+    difficulty_surface = difficulty_seletion.render('Select Game Mode:', True, (0, 0, 0))
+    screen.blit(difficulty_surface, (265, 450))
+    pygame.display.flip()
+
+    button_font = pygame.font.Font(None, 45)
+
+    # Easy Button
+    easy_button_surface = pygame.Surface((150, 200))
+    pygame.draw.rect(easy_button_surface, (0, 0, 0), easy_button_surface.get_rect(), 3)
+
+    easy_text = button_font.render('EASY', True, (255, 255, 255))
+
+    easy_rect = easy_text.get_rect(center=(easy_button_surface.get_width() / 2, easy_button_surface.get_height() / 2))
+    easy_button_surface.blit(easy_text, easy_rect)
+
+    easy_button_rect = pygame.Rect(75, 600, 150, 200)
+
+    screen.blit(easy_button_surface, (75, 600))
+    # pygame.display.flip()
+
+    # Medium Button
+    med_button_surface = pygame.Surface((150, 200))
+    pygame.draw.rect(med_button_surface, (0, 0, 0), med_button_surface.get_rect(), 3)
+
+    med_text = button_font.render('MEDIUM', True, (255, 255, 255))
+
+    med_rect = med_text.get_rect(center=(med_button_surface.get_width() / 2, med_button_surface.get_height() / 2))
+    med_button_surface.blit(med_text, med_rect)
+
+    med_button_rect = pygame.Rect(375, 600, 150, 200)
+
+    screen.blit(med_button_surface, (375, 600))
+    # pygame.display.flip()
+
+    # Hard Button
+    hard_button_surface = pygame.Surface((150, 200))
+    pygame.draw.rect(hard_button_surface, (0, 0, 0), hard_button_surface.get_rect(), 3)
+
+    hard_text = button_font.render('HARD', True, (255, 255, 255))
+
+    hard_rect = hard_text.get_rect(center=(hard_button_surface.get_width() / 2, hard_button_surface.get_height() / 2))
+    hard_button_surface.blit(hard_text, hard_rect)
+
+    hard_button_rect = pygame.Rect(675, 600, 150, 200)
+
+    screen.blit(hard_button_surface, (675, 600))
+    pygame.display.flip()
+
+    # Main loop
+    running = True
+    while running:
+        for event in pygame.event.get():
+            # checks for specific quit event
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+
+        # check button clicks
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            # easy button clicked
+            if easy_button_rect.collidepoint(event.pos):
+                # difficulty = easy (30 random empty cells)
+                # invoke Board class
+                # Board(900, 1000, screen, difficulty)
+                screen.fill((0, 0, 0))
+                pygame.display.flip()
+            # med button clicked
+            elif med_button_rect.collidepoint(event.pos):
+                # difficulty = medium (40 random empty cells)
+                # invoke Board class
+                # Board(900, 1000, screen, difficulty)
+                screen.fill((0, 255, 0))
+                pygame.display.flip()
+            # hard button clicked
+            elif hard_button_rect.collidepoint(event.pos):
+                # difficulty = hard (50 random empty cells)
+                # invoke Board class
+                # Board(900, 1000, screen, difficulty)
+                screen.fill((0, 0, 255))
+                pygame.display.flip()
+
+    pygame.quit()
+
 
 if __name__ == "__main__":
     main()
