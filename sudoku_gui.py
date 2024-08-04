@@ -36,10 +36,12 @@ class Board:
     def draw(self):
         self.screen.fill(BACKGROUND_COLOR)
 
+        # makes the cells
         for row in self.board:
             for cell in row:
                 cell.draw()
 
+        # makes the grid lines
         for i in range(GRID_SIZE + 1):
             line_width = BOLD_LINE_WIDTH if i % 3 == 0 else LINE_WIDTH
             pygame.draw.line(self.screen, LINE_COLOR, (0, i * CELL_SIZE), (WIDTH, i * CELL_SIZE), line_width)
@@ -51,32 +53,41 @@ class Board:
         self.selected_cell = self.board[row][col]
         self.selected_cell.selected = True
 
-    def select(self, row, col):
-        pass
-
-    def click(self, row, col):
-        pass
+    def click(self, x, y):
+        if x < self.width and y < self.height:
+            row = y // CELL_SIZE
+            col = x // CELL_SIZE
+            self.select(row, col)
 
     def clear(self):
-        pass
+        if self.selected_cell:
+            self.selected_cell.set_cell_value(0)
 
     def sketch(self, value):
+        # placeholder
         pass
 
     def place_number(self, value):
-        pass
+        if self.selected_cell:
+            self.selected_cell.set_cell_value(value)
 
     def reset_to_original(self):
-        pass
+        for row in self.board:
+            for cell in row:
+                cell.set_cell_value(0)
 
     def is_full(self):
-        pass
+        return all(cell.value != 0 for row in self.board for cell in row)
 
     def update_board(self):
         pass
 
     def find_empty(self):
-        pass
+        for i in range(GRID_SIZE):
+            for j in range(GRID_SIZE):
+                if self.board[i][j].value == 0:
+                    return (i, j)
+        return None
 
     def check_board(self):
         pass
