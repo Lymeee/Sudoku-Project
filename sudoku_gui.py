@@ -92,12 +92,8 @@ class Board:
     def check_board(self):
         pass
 
-def main():
-    pygame.init()
-    screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    pygame.display.set_caption("Sudoku")
-    board = Board(WIDTH, HEIGHT, screen, "easy")
-
+def start_game(screen, difficulty):
+    board = Board(900, 900, screen, difficulty)
     running = True
     while running:
         for event in pygame.event.get():
@@ -131,8 +127,8 @@ def main():
         board.draw()
         pygame.display.flip()
 
-    pygame.quit()
-    sys.exit()
+def main():
+    pass
 
 if __name__ == "__main__":
     main()
