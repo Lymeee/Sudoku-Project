@@ -11,6 +11,9 @@ BACKGROUND_COLOR = (255, 255, 255)
 LINE_COLOR = (0, 0, 0)
 SELECTED_COLOR = (255, 0, 0)
 
+# Initialize the pygame and create font object.
+pygame.font.init()
+FONT = pygame.font.SysFont('arial', 36)
 class Cell:
     def __init__(self, value, row, col, screen):
         self.value = value
