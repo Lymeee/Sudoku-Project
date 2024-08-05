@@ -2,9 +2,10 @@ import pygame
 import sys
 
 # Constants
-WIDTH, HEIGHT = 540, 600
+WINDOW_WIDTH, WINDOW_HEIGHT = 900, 1000
+BOARD_SIZE = 900
 GRID_SIZE = 9
-CELL_SIZE = WIDTH // GRID_SIZE
+CELL_SIZE = BOARD_SIZE // GRID_SIZE
 LINE_WIDTH = 2
 BOLD_LINE_WIDTH = 4
 BACKGROUND_COLOR = (255, 255, 255)
@@ -45,9 +46,7 @@ class Cell:
 
 
 class Board:
-    def __init__(self, width, height, screen, difficulty):
-        self.width = width
-        self.height = height
+    def __init__(self, screen, difficulty):
         self.screen = screen
         self.difficulty = difficulty
         self.board = [[Cell(0, i, j, screen) for j in range(GRID_SIZE)] for i in range(GRID_SIZE)]
@@ -64,8 +63,8 @@ class Board:
         # makes the grid lines
         for i in range(GRID_SIZE + 1):
             line_width = BOLD_LINE_WIDTH if i % 3 == 0 else LINE_WIDTH
-            pygame.draw.line(self.screen, LINE_COLOR, (0, i * CELL_SIZE), (WIDTH, i * CELL_SIZE), line_width)
-            pygame.draw.line(self.screen, LINE_COLOR, (i * CELL_SIZE, 0), (i * CELL_SIZE, WIDTH), line_width)
+            pygame.draw.line(self.screen, LINE_COLOR, (0, i * CELL_SIZE), (BOARD_SIZE, i * CELL_SIZE), line_width)
+            pygame.draw.line(self.screen, LINE_COLOR, (i * CELL_SIZE, 0), (i * CELL_SIZE, BOARD_SIZE), line_width)
 
     def select(self, row, col):
         if self.selected_cell:
@@ -74,7 +73,7 @@ class Board:
         self.selected_cell.selected = True
 
     def click(self, x, y):
-        if x < self.width and y < self.height:
+        if x < BOARD_SIZE and y < BOARD_SIZE:
             row = y // CELL_SIZE
             col = x // CELL_SIZE
             self.select(row, col)
@@ -113,12 +112,14 @@ class Board:
         pass
 
 def start_game(screen, difficulty):
-    board = Board(900, 900, screen, difficulty)
+    board = Board(screen, difficulty)
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+                pygame.quit()
+                sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
                 board.click(x, y)
@@ -150,7 +151,7 @@ def start_game(screen, difficulty):
 def main():
     # initializing pygame module, making game window
     pygame.init()
-    screen = pygame.display.set_mode((900, 1000))
+    screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
     screen.fill((255, 255, 255))
     pygame.display.set_caption('Sudoku')
 
@@ -222,28 +223,22 @@ def main():
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             # easy button clicked
             if easy_button_rect.collidepoint(event.pos):
-                # difficulty = easy (30 random empty cells)
-                # invoke Board class
-                # Board(900, 1000, screen, difficulty)
-                screen.fill((0, 0, 0))
+                screen.fill((255, 255, 255))
                 pygame.display.flip()
+                start_game(screen, 'easy')
             # med button clicked
             elif med_button_rect.collidepoint(event.pos):
-                # difficulty = medium (40 random empty cells)
-                # invoke Board class
-                # Board(900, 1000, screen, difficulty)
-                screen.fill((0, 255, 0))
+                screen.fill((255, 255, 255))
                 pygame.display.flip()
+                start_game(screen, 'medium')
             # hard button clicked
             elif hard_button_rect.collidepoint(event.pos):
-                # difficulty = hard (50 random empty cells)
-                # invoke Board class
-                # Board(900, 1000, screen, difficulty)
-                screen.fill((0, 0, 255))
+                screen.fill((255, 255, 255))
                 pygame.display.flip()
+                start_game(screen, 'hard')
 
     pygame.quit()
-
+    sys.exit()
 
 if __name__ == "__main__":
     main()
