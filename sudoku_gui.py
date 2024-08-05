@@ -11,6 +11,8 @@ BOLD_LINE_WIDTH = 4
 BACKGROUND_COLOR = (255, 255, 255)
 LINE_COLOR = (0, 0, 0)
 SELECTED_COLOR = (255, 0, 0)
+HIGHLIGHT_COLOR = (186, 85, 211)
+HIGHLIGHT_WIDTH = 5
 
 # Initialize the pygame and create font object.
 pygame.font.init()
@@ -42,7 +44,7 @@ class Cell:
             text = FONT.render(str(self.sketched_value), True, LINE_COLOR)
             self.screen.blit(text, (x + 5, y + 5))
         if self.selected:
-            pygame.draw.rect(self.screen, SELECTED_COLOR, rect, LINE_WIDTH)
+            pygame.draw.rect(self.screen, HIGHLIGHT_COLOR, rect, HIGHLIGHT_WIDTH)
 
 
 class Board:
@@ -51,6 +53,8 @@ class Board:
         self.difficulty = difficulty
         self.board = [[Cell(0, i, j, screen) for j in range(GRID_SIZE)] for i in range(GRID_SIZE)]
         self.selected_cell = None
+        self.selected_row = 0
+        self.selected_col = 0
 
     def draw(self):
         self.screen.fill(BACKGROUND_COLOR)
@@ -71,6 +75,12 @@ class Board:
             self.selected_cell.selected = False
         self.selected_cell = self.board[row][col]
         self.selected_cell.selected = True
+        self.selected_row, self.selected_col = row, col
+
+    def arrow_selection(self, dx, dy):
+        new_row = (self.selected_row + dy) % GRID_SIZE
+        new_col = (self.selected_col + dx) % GRID_SIZE
+        self.select(new_row, new_col)
 
     def click(self, x, y):
         if x < BOARD_SIZE and y < BOARD_SIZE:
@@ -144,6 +154,14 @@ def start_game(screen, difficulty):
                     board.place_number(9)
                 elif event.key == pygame.K_DELETE or event.key == pygame.K_BACKSPACE:
                     board.clear()
+                elif event.key == pygame.K_UP:
+                    board.arrow_selection(0, -1)
+                elif event.key == pygame.K_DOWN:
+                    board.arrow_selection(0, 1)
+                elif event.key == pygame.K_LEFT:
+                    board.arrow_selection(-1, 0)
+                elif event.key == pygame.K_RIGHT:
+                    board.arrow_selection(1, 0)
 
         board.draw()
         pygame.display.flip()
