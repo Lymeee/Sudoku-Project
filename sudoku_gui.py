@@ -12,35 +12,34 @@ LINE_COLOR = (0, 0, 0)
 SELECTED_COLOR = (255, 0, 0)
 
 class Cell:
-    class Cell:
-        def __init__(self, value, row, col, screen):
-            self.value = value
-            self.sketched_value = 0
-            self.row = row
-            self.col = col
-            self.screen = screen
-            self.selected = False
+    def __init__(self, value, row, col, screen):
+        self.value = value
+        self.sketched_value = 0
+        self.row = row
+        self.col = col
+        self.screen = screen
+        self.selected = False
 
-        def set_cell_value(self, value):
-            self.value = value
+    def set_cell_value(self, value):
+        self.value = value
 
-        def set_sketched_value(self, value):
-            self.sketched_value = value
+    def set_sketched_value(self, value):
+        self.sketched_value = value
 
-        def draw(self):
-            x = self.col * CELL_SIZE
-            y = self.row * CELL_SIZE
-            rect = pygame.Rect(x, y, CELL_SIZE, CELL_SIZE)
-            pygame.draw.rect(self.screen, BACKGROUND_COLOR, rect)
-            if self.value != 0:
-                text = FONT.render(str(self.value), True, LINE_COLOR)
-                self.screen.blit(text, (
-                x + CELL_SIZE // 2 - text.get_width() // 2, y + CELL_SIZE // 2 - text.get_height() // 2))
-            elif self.sketched_value != 0:
-                text = FONT.render(str(self.sketched_value), True, LINE_COLOR)
-                self.screen.blit(text, (x + 5, y + 5))
-            if self.selected:
-                pygame.draw.rect(self.screen, SELECTED_COLOR, rect, LINE_WIDTH)
+    def draw(self):
+        x = self.col * CELL_SIZE
+        y = self.row * CELL_SIZE
+        rect = pygame.Rect(x, y, CELL_SIZE, CELL_SIZE)
+        pygame.draw.rect(self.screen, BACKGROUND_COLOR, rect)
+        if self.value != 0:
+            text = FONT.render(str(self.value), True, LINE_COLOR)
+            self.screen.blit(text, (x + CELL_SIZE // 2 - text.get_width() // 2, y + CELL_SIZE // 2 - text.get_height() // 2))
+        elif self.sketched_value != 0:
+            text = FONT.render(str(self.sketched_value), True, LINE_COLOR)
+            self.screen.blit(text, (x + 5, y + 5))
+        if self.selected:
+            pygame.draw.rect(self.screen, SELECTED_COLOR, rect, LINE_WIDTH)
+
 
 class Board:
     def __init__(self, width, height, screen, difficulty):
