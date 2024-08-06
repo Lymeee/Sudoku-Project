@@ -198,7 +198,6 @@ def main():
     easy_button_rect = pygame.Rect(75, 600, 150, 200)
 
     screen.blit(easy_button_surface, (75, 600))
-    # pygame.display.flip()
 
     # Medium Button
     med_button_surface = pygame.Surface((150, 200))
@@ -212,7 +211,6 @@ def main():
     med_button_rect = pygame.Rect(375, 600, 150, 200)
 
     screen.blit(med_button_surface, (375, 600))
-    # pygame.display.flip()
 
     # Hard Button
     hard_button_surface = pygame.Surface((150, 200))
@@ -257,6 +255,45 @@ def main():
 
     pygame.quit()
     sys.exit()
+
+    ## initializes ending screen fonts
+
+    #ending_font = pygame.font.Font(None, 100)
+    #button_font = pygame.font.Font(None, 60)
+
+    ## if player wins sudoku game
+
+    #winner_surface = ending_font.render('Game Won!', True, (0, 0, 0))
+    #screen.blit(winner_surface, (275, 350))
+
+    ## successfully completed exit button
+
+    #exit_button_surface = pygame.Surface((250, 150))
+    #pygame.draw.rect(exit_button_surface, (0, 0, 0), exit_button_surface.get_rect(), 3)
+    #exit_text = button_font.render('EXIT', True, (255, 255, 255))
+    #exit_rect = exit_text.get_rect(center=(exit_button_surface.get_width() / 2, exit_button_surface.get_height() / 2))
+    #exit_button_surface.blit(exit_text, exit_rect)
+
+    #exit_button_rect = pygame.Rect(350, 550, 250, 150)
+    #screen.blit(exit_button_surface, (350, 500))
+    #pygame.display.flip()
+
+    ## if player loses sudoku game
+    #l_surface = ending_font.render('Game Over :(', True, (0, 0, 0))
+    #screen.blit(l_surface, (260, 350))
+    #pygame.display.flip()
+
+    ## unsuccessful restart button
+    #res_button_surface = pygame.Surface((250, 150))
+    #pygame.draw.rect(res_button_surface, (0, 0, 0), res_button_surface.get_rect(), 3)
+    #res_text = button_font.render('RESTART', True, (255, 255, 255))
+    #res_rect = res_text.get_rect(center=(res_button_surface.get_width() / 2, res_button_surface.get_height() / 2))
+    #res_button_surface.blit(res_text, res_rect)
+
+    #res_button_rect = pygame.Rect(350, 550, 250, 150)
+    #screen.blit(res_button_surface, (350, 500))
+    #pygame.display.flip()
+
 
 if __name__ == "__main__":
     main()
