@@ -1,5 +1,6 @@
 import pygame
 import sys
+from sudoku_generator import generate_sudoku
 
 # Constants
 WINDOW_WIDTH, WINDOW_HEIGHT = 900, 1000
@@ -14,6 +15,11 @@ SELECTED_COLOR = (255, 0, 0)
 HIGHLIGHT_COLOR = (186, 85, 211)
 HIGHLIGHT_WIDTH = 5
 
+difficulty_levels = {
+    'easy': 1,
+    'medium': 40,
+    'hard': 60
+}
 # Initialize the pygame and create font object.
 pygame.font.init()
 FONT = pygame.font.SysFont('arial', 36)
@@ -50,11 +56,17 @@ class Cell:
 class Board:
     def __init__(self, screen, difficulty):
         self.screen = screen
-        self.difficulty = difficulty
+        self.difficulty = difficulty_levels[difficulty]  # Set removed cells based on difficulty
         self.board = [[Cell(0, i, j, screen) for j in range(GRID_SIZE)] for i in range(GRID_SIZE)]
         self.selected_cell = None
         self.selected_row = 0
         self.selected_col = 0
+        self.solution = None
+    def initialize_board(self):
+        puzzle, self.solution = generate_sudoku(GRID_SIZE, self.difficulty)
+        for i in range(GRID_SIZE):
+            for j in range(GRID_SIZE):
+                self.board[i][j].set_cell_value(puzzle[i][j])
 
     def draw(self):
         self.screen.fill(BACKGROUND_COLOR)
@@ -123,6 +135,7 @@ class Board:
 
 def start_game(screen, difficulty):
     board = Board(screen, difficulty)
+    board.initialize_board()
     running = True
     while running:
         for event in pygame.event.get():
