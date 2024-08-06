@@ -17,9 +17,9 @@ HIGHLIGHT_WIDTH = 5
 BUTTON_WIDTH, BUTTON_HEIGHT = 200, 60
 
 difficulty_levels = {
-    'easy': 1,
+    'easy': 30,
     'medium': 40,
-    'hard': 60
+    'hard': 50
 }
 # Initialize the pygame and create font.
 pygame.font.init()
